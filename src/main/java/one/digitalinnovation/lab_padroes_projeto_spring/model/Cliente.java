@@ -1,10 +1,10 @@
-package one.digitalinnovation.gof.model;
+package one.digitalinnovation.lab_padroes_projeto_spring.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Cliente {
@@ -14,7 +14,7 @@ public class Cliente {
 	private Long id;
 	private String nome;
 	@ManyToOne
-	private Endereco endereco;
+	private String Endereco;
 
 	public Long getId() {
 		return id;
@@ -32,12 +32,15 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
+    public String getEndereco() {
+        return Endereco;
+    }
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
+    public void setEndereco(String endereco) {
+        Endereco = endereco;
+    }
+
+	
 
 }
+

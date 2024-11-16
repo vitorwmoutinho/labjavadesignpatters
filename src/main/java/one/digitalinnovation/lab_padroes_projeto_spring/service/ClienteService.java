@@ -1,14 +1,7 @@
-package one.digitalinnovation.gof.service;
+package one.digitalinnovation.lab_padroes_projeto_spring.service;
 
-import one.digitalinnovation.gof.model.Cliente;
+import one.digitalinnovation.lab_padroes_projeto_spring.model.Cliente;
 
-/**
- * Interface que define o padrão <b>Strategy</b> no domínio de cliente. Com
- * isso, se necessário, podemos ter multiplas implementações dessa mesma
- * interface.
- * 
- * @author falvojr
- */
 public interface ClienteService {
 
 	Iterable<Cliente> buscarTodos();
