@@ -1,4 +1,4 @@
-package main.java.one.digitalinnovation.lab_padroes_projeto_spring.controller;
+package one.digitalinnovation.gof.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
