@@ -1,9 +1,9 @@
 package one.digitalinnovation.lab_padroes_projeto_spring.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 import one.digitalinnovation.lab_padroes_projeto_spring.model.Cliente;
 import one.digitalinnovation.lab_padroes_projeto_spring.model.ClienteRepository;
@@ -14,15 +14,16 @@ import one.digitalinnovation.lab_padroes_projeto_spring.service.ViaCepService;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
-    
+
     @Autowired
     private ClienteRepository clienteRepository;
+    
     @Autowired
     private EnderecoRepository enderecoRepository;
+    
     @Autowired
     private ViaCepService viaCepService;
 
-    
     @Override
     public Iterable<Cliente> buscarTodos() {
         // Buscar todos os Clientes.
@@ -37,16 +38,16 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public void inserir(Cliente cliente) {
-        // Inserir Cliente com o tratamento do CEP.
+        // Inserir um novo cliente com o endereço.
         salvarClienteComCep(cliente);
     }
 
     @Override
     public void atualizar(Long id, Cliente cliente) {
-        // Buscar Cliente por ID, caso exista, atualizar.
-        Optional<Cliente> clienteBd = clienteRepository.findById(id);
-        if (clienteBd.isPresent()) {
-            cliente.setId(id); // Atualiza o ID do cliente com o existente.
+        // Atualizar Cliente existente (caso exista).
+        Optional<Cliente> clienteExistente = clienteRepository.findById(id);
+        if (clienteExistente.isPresent()) {
+            cliente.setId(id);
             salvarClienteComCep(cliente);
         }
     }
@@ -57,20 +58,19 @@ public class ClienteServiceImpl implements ClienteService {
         clienteRepository.deleteById(id);
     }
 
-    private <S> void salvarClienteComCep(Cliente cliente) {
-        // Verificar se o Endereco do Cliente já existe (pelo CEP).
-        String cep = cliente.getEndereco();
+    /**
+     * Método privado para salvar o Cliente com base no CEP.
+     * 
+     * @param cliente Objeto Cliente a ser salvo.
+     */
+    private void salvarClienteComCep(Cliente cliente) {
+        String cep = cliente.getEndereco().getCep();
         Endereco endereco = enderecoRepository.findById(cep).orElseGet(() -> {
-            // Caso não exista, integrar com o ViaCEP e persistir o retorno.
-            ViaCepService novoEndereco = viaCepService;
-            enderecoRepository.save((S) novoEndereco);
+            Endereco novoEndereco = viaCepService.consultarCep(cep);
+            enderecoRepository.save(novoEndereco);
             return novoEndereco;
         });
-        cliente.getEndereco();
-        // Inserir ou atualizar Cliente, vinculando o Endereco (novo ou existente).
+        cliente.setEndereco(endereco);
         clienteRepository.save(cliente);
     }
-
 }
-
- 

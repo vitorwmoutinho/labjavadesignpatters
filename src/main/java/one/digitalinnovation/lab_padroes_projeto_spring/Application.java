@@ -1,14 +1,10 @@
-package one.digitalinnovation.gof;
+package one.digitalinnovation.lab_padroes_projeto_spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-/**
- * Regidido por vitorwmoutinho
- * 
- * @author falvojr
- */
+
 @EnableFeignClients
 @SpringBootApplication
 public class Application {
